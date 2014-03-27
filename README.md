@@ -1,2 +1,1 @@
-comp1021
-========
+This repository contains all the assignments and programs I made for the HKUST COMP 1021 course. Feel free to browse and use!
