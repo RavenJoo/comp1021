@@ -20,6 +20,7 @@ player_size = 50        # The size of the player image plus margin
 player_init_x = 0
 player_init_y = -window_height / 2 + window_margin
 player_speed = 10       # The speed the player moves left or right
+score = 0
 
 # Enemy's parameters
 enemy_number = 2        # The number of enemies in the game
@@ -37,6 +38,8 @@ enemy_hit_player_distance = 30
     # than this value
 
 # Enemy movement parameters
+enemy_moving = True
+enemy_temp_speed = 0
 enemy_speed = 2
 enemy_speed_increment = 1
     # The increase in speed every time the enemies move
@@ -96,7 +99,7 @@ def playermoveright():
 def updatescreen():
     # Use the global variables here because we will change them inside this
     # function
-    global enemy_direction, enemy_speed
+    global enemy_direction, enemy_speed, score, score_display
 
     # Move the enemies depending on the moving direction
 
@@ -148,6 +151,9 @@ def updatescreen():
             if enemy.isvisible() and laser.distance(enemy) < laser_hit_enemy_distance:
                 enemy.hideturtle()
                 laser.hideturtle()
+                score = score + enemy_speed * 10
+                score_display.clear()
+                score_display.write(str(score), font=("System", 12, "bold"), align = "center")
                 # Stop if some enemy is hit
                 break
 
@@ -180,6 +186,23 @@ def updatescreen():
     # Schedule the next screen update
     turtle.ontimer(updatescreen, update_interval)
 
+# This function is run when the player presses 's' key. If the
+# enemies are moving, the function stops them. If they are not,
+# the function moves them again. This function does not affect
+# the player turtle or the laser.
+def stopkeypressed():
+    global enemy_speed, enemy_moving, enemy_temp_speed
+
+    # Check if the enemy is moving or not.
+    if enemy_moving:
+        enemy_temp_speed = enemy_speed
+        enemy_speed = 0
+        enemy_moving = False
+    else:
+        enemy_speed = enemy_temp_speed
+        enemy_moving = True
+
+
 """
     Shoot the laser
 """
@@ -209,9 +232,21 @@ def gamestart(x, y):
     enemy_number_text.clear()
     left_arrow.hideturtle()
     right_arrow.hideturtle()
+
     # Use the global variables here because we will change them inside this
     # function
-    global player, laser
+    global player, laser, score, score_label, score_display
+    
+    # Score display initialization
+    score_label.up()
+    score_label.goto(-260, 275)
+    score_label.color("Red")
+    score_label.write("Score:", font=("System", 12, "bold"), align = "center")
+    # Value display
+    score_display.up()
+    score_display.goto(-220, 275)
+    score_display.color("Red")
+    score_display.write(str(score), font=("System", 12, "bold"), align = "center")
 
     ### Player turtle ###
 
@@ -247,6 +282,8 @@ def gamestart(x, y):
 
         # Add the enemy to the end of the enemies list
         enemies.append(enemy)
+
+    turtle.onkeypress(stopkeypressed, 's')
 
     ### Laser turtle ###
 
@@ -291,7 +328,7 @@ def gameover(message):
 
 # Set up the turtle window
 turtle.setup(window_width, window_height)
-turtle.bgcolor("Black")
+turtle.bgpic("ust.gif")
 turtle.up()
 turtle.hideturtle()
 turtle.tracer(False)
@@ -299,7 +336,7 @@ turtle.tracer(False)
 # Spinner control initialization
 labels = turtle.Turtle()
 labels.hideturtle()
-labels.pencolor("White")
+labels.pencolor("Black")
 labels.up()
 # Write the text
 labels.goto(-100, 0) # Next to the spinner control
@@ -307,7 +344,7 @@ labels.write("Number of Enemies:", font=("System", 12, "bold"))
 # Value display
 enemy_number_text = turtle.Turtle()
 enemy_number_text.hideturtle()
-enemy_number_text.pencolor("White")
+enemy_number_text.pencolor("Black")
 enemy_number_text.up()
 enemy_number_text.goto(80, 0)
 enemy_number_text.write(str(enemy_number), font=("System", 12, "bold"), align="center")
@@ -315,7 +352,7 @@ enemy_number_text.write(str(enemy_number), font=("System", 12, "bold"), align="c
 left_arrow = turtle.Turtle()
 left_arrow.up()
 left_arrow.shape("arrow")
-left_arrow.color("White")
+left_arrow.color("Black")
 left_arrow.shapesize(0.5, 1)
 left_arrow.left(180)
 left_arrow.goto(60, 8)
@@ -332,7 +369,7 @@ left_arrow.showturtle()
 right_arrow = turtle.Turtle()
 right_arrow.up()
 right_arrow.shape("arrow")
-right_arrow.color("White")
+right_arrow.color("Black")
 right_arrow.shapesize(0.5, 1)
 right_arrow.goto(100, 8)
 def increase_enemy_number(x, y):
@@ -357,7 +394,7 @@ for _ in range(2):
     start_button.forward(25)
     start_button.left(90)
 start_button.end_fill()
-start_button.color("White")
+start_button.color("Black")
 start_button.goto(0, -35)
 start_button.write("Start", font=("System", 12, "bold"), align = "center")
 # Make the turtle clickable with the same size as the graphics
@@ -366,6 +403,11 @@ start_button.shape("square")
 start_button.shapesize(1.25, 4)
 start_button.color("")
 start_button.onclick(gamestart)
+
+score_label = turtle.Turtle()
+score_label.hideturtle()
+score_display = turtle.Turtle()
+score_display.hideturtle()
 
 turtle.update()
 
