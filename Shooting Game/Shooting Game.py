@@ -232,6 +232,9 @@ def gamestart(x, y):
     enemy_number_text.clear()
     left_arrow.hideturtle()
     right_arrow.hideturtle()
+    difficulty_text.clear()
+    left_arrow_2.hideturtle()
+    right_arrow_2.hideturtle()
 
     # Use the global variables here because we will change them inside this
     # function
@@ -336,26 +339,28 @@ turtle.tracer(False)
 # Spinner control initialization
 labels = turtle.Turtle()
 labels.hideturtle()
-labels.pencolor("Black")
+labels.pencolor("Red")
 labels.up()
 # Write the text
-labels.goto(-100, 0) # Next to the spinner control
+labels.goto(-100, -55) # Next to the spinner control
 labels.write("Number of Enemies:", font=("System", 12, "bold"))
+labels.goto(-100, -30)
+labels.write("Game Difficulty:", font=("System", 12, "bold"))
 # Value display
 enemy_number_text = turtle.Turtle()
 enemy_number_text.hideturtle()
-enemy_number_text.pencolor("Black")
+enemy_number_text.pencolor("Red")
 enemy_number_text.up()
-enemy_number_text.goto(80, 0)
+enemy_number_text.goto(80, -55)
 enemy_number_text.write(str(enemy_number), font=("System", 12, "bold"), align="center")
 # Left arrow
 left_arrow = turtle.Turtle()
 left_arrow.up()
 left_arrow.shape("arrow")
-left_arrow.color("Black")
+left_arrow.color("Red")
 left_arrow.shapesize(0.5, 1)
 left_arrow.left(180)
-left_arrow.goto(60, 8)
+left_arrow.goto(60, -47)
 def decrease_enemy_number(x, y):
     # Declare enemy_number as global
     global enemy_number
@@ -369,9 +374,9 @@ left_arrow.showturtle()
 right_arrow = turtle.Turtle()
 right_arrow.up()
 right_arrow.shape("arrow")
-right_arrow.color("Black")
+right_arrow.color("Red")
 right_arrow.shapesize(0.5, 1)
-right_arrow.goto(100, 8)
+right_arrow.goto(100, -47)
 def increase_enemy_number(x, y):
     # Declare enemy_number as global
     global enemy_number
@@ -380,11 +385,61 @@ def increase_enemy_number(x, y):
         enemy_number_text.clear()
         enemy_number_text.write(str(enemy_number), font=("System", 12, "bold"), align="center")
 right_arrow.onclick(increase_enemy_number)
+# Difficulty display
+difficulty_text = turtle.Turtle()
+difficulty_text.hideturtle()
+difficulty_text.pencolor("Red")
+difficulty_text.up()
+difficulty_text.goto(68, -30)
+difficulty_text.write("easy", font=("System", 12, "bold"), align="center")
+# Left arrow for difficulty
+left_arrow_2 = turtle.Turtle()
+left_arrow_2.up()
+left_arrow_2.shape("arrow")
+left_arrow_2.color("Red")
+left_arrow_2.shapesize(0.5, 1)
+left_arrow_2.left(180)
+left_arrow_2.goto(35, -22)
+def lower_difficulty(x, y):
+    # Declare enemy_speed_increment as global
+    global enemy_speed_increment
+    if enemy_speed_increment == 5:
+        enemy_speed_increment = 3
+        difficulty_text.clear()
+        difficulty_text.goto(70, -30)
+        difficulty_text.write("normal", font=("System", 12, "bold"), align="center")
+    elif enemy_speed_increment == 3:
+        enemy_speed_increment = 1
+        difficulty_text.clear()
+        difficulty_text.goto(68, -30)
+        difficulty_text.write("easy", font=("System", 12, "bold"), align="center")
+left_arrow_2.onclick(lower_difficulty)
+# Right arrow for difficulty
+right_arrow_2 = turtle.Turtle()
+right_arrow_2.up()
+right_arrow_2.shape("arrow")
+right_arrow_2.color("Red")
+right_arrow_2.shapesize(0.5, 1)
+right_arrow_2.goto(100, -22)
+def increase_difficulty(x, y):
+    # Declare enemy_speed_increment as global
+    global enemy_speed_increment
+    if enemy_speed_increment == 1:
+        enemy_speed_increment = 3
+        difficulty_text.clear()
+        difficulty_text.goto(70, -30)
+        difficulty_text.write("normal", font=("System", 12, "bold"), align="center")
+    elif enemy_speed_increment == 3:
+        enemy_speed_increment = 5
+        difficulty_text.clear()
+        difficulty_text.goto(68, -30)
+        difficulty_text.write("hard", font=("System", 12, "bold"), align="center")
+right_arrow_2.onclick(increase_difficulty)
 
 # Start button initialization
 start_button = turtle.Turtle()
 start_button.up()
-start_button.goto(-40, -40)
+start_button.goto(-40, -95)
 # Set up button graphics
 start_button.color("White", "DarkGray")
 start_button.begin_fill()
@@ -395,15 +450,16 @@ for _ in range(2):
     start_button.left(90)
 start_button.end_fill()
 start_button.color("Black")
-start_button.goto(0, -35)
+start_button.goto(0, -90)
 start_button.write("Start", font=("System", 12, "bold"), align = "center")
 # Make the turtle clickable with the same size as the graphics
-start_button.goto(0, -28)
+start_button.goto(0, -83)
 start_button.shape("square")
 start_button.shapesize(1.25, 4)
 start_button.color("")
 start_button.onclick(gamestart)
 
+# Declare global variables for score display
 score_label = turtle.Turtle()
 score_label.hideturtle()
 score_display = turtle.Turtle()
