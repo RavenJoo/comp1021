@@ -26,7 +26,7 @@ player_speed = 10       # The speed the player moves left or right
 score = 0
 
 # Enemy's parameters
-enemy_number = 2        # The number of enemies in the game
+enemy_number = 21        # The number of enemies in the game
 
 enemy_size = 50         # The size of the enemy image plus margin
 enemy_init_x = -window_width / 2 + window_margin
@@ -133,9 +133,9 @@ def updatescreen():
 
         # Set up alternating enemy image
         if (x//20)%2 == 0:
-            enemy.shape("enemy.gif")
+            enemy.shape("closedbook.gif")
         else:
-            enemy.shape("enemy2.gif")
+            enemy.shape("openbook.gif")
         
     # Perfrom several actions if the laser is visible
 
@@ -284,13 +284,13 @@ def gamestart(x, y):
     ### Enemy turtles ###
 
     # Add the enemy picture
-    turtle.addshape("enemy.gif")
-    turtle.addshape("enemy2.gif")
+    turtle.addshape("closedbook.gif")
+    turtle.addshape("openbook.gif")
 
     for i in range(enemy_number):
         # Create the turtle for the enemy
         enemy = turtle.Turtle()
-        enemy.shape("enemy.gif")
+        enemy.shape("closedbook.gif")
         enemy.up()
 
         # Move to a proper position counting from the top left corner
@@ -355,16 +355,24 @@ labels.hideturtle()
 labels.pencolor("Red")
 labels.up()
 # Write the text
-labels.goto(-100, -55) # Next to the spinner control
+labels.goto(-100, -155) # Next to the spinner control
 labels.write("Number of Enemies:", font=("System", 12, "bold"))
-labels.goto(-100, -30)
+labels.goto(-100, -130)
 labels.write("Game Difficulty:", font=("System", 12, "bold"))
+labels.goto(0, 180)
+labels.write("SAVE", font=("System", 60, "bold"), align="center")
+labels.goto(0, 100)
+labels.write("HKUST", font=("System", 60, "bold"), align="center")
+labels.goto(0, -40)
+labels.write("Save HKUST from evil homeworks", font=("System", 16, "bold"), align="center")
+labels.goto(0, -65)
+labels.write("with your mighty pen and redbird!", font=("System", 16, "bold"), align="center")
 # Value display
 enemy_number_text = turtle.Turtle()
 enemy_number_text.hideturtle()
 enemy_number_text.pencolor("Red")
 enemy_number_text.up()
-enemy_number_text.goto(80, -55)
+enemy_number_text.goto(80, -155)
 enemy_number_text.write(str(enemy_number), font=("System", 12, "bold"), align="center")
 # Left arrow
 left_arrow = turtle.Turtle()
@@ -373,7 +381,7 @@ left_arrow.shape("arrow")
 left_arrow.color("Red")
 left_arrow.shapesize(0.5, 1)
 left_arrow.left(180)
-left_arrow.goto(60, -47)
+left_arrow.goto(60, -147)
 def decrease_enemy_number(x, y):
     # Declare enemy_number as global
     global enemy_number
@@ -389,7 +397,7 @@ right_arrow.up()
 right_arrow.shape("arrow")
 right_arrow.color("Red")
 right_arrow.shapesize(0.5, 1)
-right_arrow.goto(100, -47)
+right_arrow.goto(100, -147)
 def increase_enemy_number(x, y):
     # Declare enemy_number as global
     global enemy_number
@@ -403,7 +411,7 @@ difficulty_text = turtle.Turtle()
 difficulty_text.hideturtle()
 difficulty_text.pencolor("Red")
 difficulty_text.up()
-difficulty_text.goto(68, -30)
+difficulty_text.goto(68, -130)
 difficulty_text.write("easy", font=("System", 12, "bold"), align="center")
 # Left arrow for difficulty
 left_arrow_2 = turtle.Turtle()
@@ -412,7 +420,7 @@ left_arrow_2.shape("arrow")
 left_arrow_2.color("Red")
 left_arrow_2.shapesize(0.5, 1)
 left_arrow_2.left(180)
-left_arrow_2.goto(35, -22)
+left_arrow_2.goto(35, -122)
 def lower_difficulty(x, y):
     # Declare enemy_speed_increment as global
     global enemy_speed_increment
@@ -433,7 +441,7 @@ right_arrow_2.up()
 right_arrow_2.shape("arrow")
 right_arrow_2.color("Red")
 right_arrow_2.shapesize(0.5, 1)
-right_arrow_2.goto(100, -22)
+right_arrow_2.goto(100, -122)
 def increase_difficulty(x, y):
     # Declare enemy_speed_increment as global
     global enemy_speed_increment
@@ -452,7 +460,7 @@ right_arrow_2.onclick(increase_difficulty)
 # Start button initialization
 start_button = turtle.Turtle()
 start_button.up()
-start_button.goto(-40, -95)
+start_button.goto(-40, -195)
 # Set up button graphics
 start_button.color("White", "DarkGray")
 start_button.begin_fill()
@@ -463,10 +471,10 @@ for _ in range(2):
     start_button.left(90)
 start_button.end_fill()
 start_button.color("Black")
-start_button.goto(0, -90)
+start_button.goto(0, -190)
 start_button.write("Start", font=("System", 12, "bold"), align = "center")
 # Make the turtle clickable with the same size as the graphics
-start_button.goto(0, -83)
+start_button.goto(0, -183)
 start_button.shape("square")
 start_button.shapesize(1.25, 4)
 start_button.color("")
@@ -485,7 +493,7 @@ pygame.mixer.init(buffer=16)
 enemy_hit_sound = pygame.mixer.Sound("enemyhit.wav")
 gameover_sound = pygame.mixer.Sound("gameover.wav")
 win_sound = pygame.mixer.Sound("gamewin.wav")
-laser_sound = pygame.mixer.Sound("lasersound.wav")
+laser_sound = pygame.mixer.Sound("huh.wav")
 
 turtle.update()
 
