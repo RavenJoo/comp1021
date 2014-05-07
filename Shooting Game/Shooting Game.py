@@ -3,10 +3,13 @@
 """
 
 import turtle
+import pygame
 
 """
     Constants and variables
 """
+
+
 
 # General parameters
 window_height = 600
@@ -154,6 +157,7 @@ def updatescreen():
                 score = score + enemy_speed * 10
                 score_display.clear()
                 score_display.write(str(score), font=("System", 12, "bold"), align = "center")
+                enemy_hit_sound.play()
                 # Stop if some enemy is hit
                 break
 
@@ -162,6 +166,7 @@ def updatescreen():
         if enemy.ycor()-player.ycor() < enemy_hit_player_distance and enemy.isvisible():
             # Show a message
             gameover("You lose!")
+            gameover_sound.play()
 
             # Return and do not run updatescreen() again
             return
@@ -179,6 +184,9 @@ def updatescreen():
     if count == 0:
         # Perform several gameover actions
         gameover("You win!")
+        win_sound.play()
+
+        return
 
     # Update the screen
     turtle.update()
@@ -212,6 +220,8 @@ def stopkeypressed():
 # be shot at any one time.
 def shoot():
 
+    global laser_sound
+
     # Shoot the laser only if it is not visible
     if not laser.isvisible():
         # Make the laser to become visible
@@ -219,6 +229,9 @@ def shoot():
         
         # Move the laser to the position of the player
         laser.goto(player.pos())
+
+        # Play laser sound
+        laser_sound.play()
 
 """
     Game start
@@ -254,11 +267,11 @@ def gamestart(x, y):
     ### Player turtle ###
 
     # Add the spaceship picture
-    turtle.addshape("spaceship.gif")
+    turtle.addshape("redbird.gif")
 
     # Create the player turtle and move it to the initial position
     player = turtle.Turtle()
-    player.shape("spaceship.gif")
+    player.shape("redbird.gif")
     player.up()
     player.goto(player_init_x, player_init_y)
 
@@ -293,7 +306,7 @@ def gamestart(x, y):
     # Create the laser turtle using the square turtle shape
     laser = turtle.Turtle()
     laser.shape("square")
-    laser.color("White")
+    laser.color("Red")
 
     # Change the size of the turtle and change the orientation of the turtle
     laser.shapesize(laser_width / 20, laser_height / 20)
@@ -464,6 +477,15 @@ score_label = turtle.Turtle()
 score_label.hideturtle()
 score_display = turtle.Turtle()
 score_display.hideturtle()
+
+# Initializing pygame module
+pygame.init()
+pygame.mixer.init(buffer=16)
+# Importing sounds
+enemy_hit_sound = pygame.mixer.Sound("enemyhit.wav")
+gameover_sound = pygame.mixer.Sound("gameover.wav")
+win_sound = pygame.mixer.Sound("gamewin.wav")
+laser_sound = pygame.mixer.Sound("lasersound.wav")
 
 turtle.update()
 
