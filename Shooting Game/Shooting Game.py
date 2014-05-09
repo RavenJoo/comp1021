@@ -1,5 +1,12 @@
 """
-    Turtle Graphics - Shooting Game
+    SAVE HKUST Shooting Game
+    Run this file to start
+    
+    Written by: JOO, Minhyung
+    Student ID: 20173164
+    For: Spring 2014 COMP 1021 Assignment 2
+
+    The sources for all the used files are all in the readme.txt file.
 """
 
 import turtle
@@ -56,8 +63,6 @@ enemy_direction = 1
 enemies = []
 
 # Laser parameter
-laser_width = 2
-laser_height = 15
 laser_speed = 20
 laser_hit_enemy_distance = 20
     # The laser will destory an enemy if the distance
@@ -249,6 +254,8 @@ def gamestart(x, y):
     left_arrow_2.hideturtle()
     right_arrow_2.hideturtle()
 
+    turtle.bgpic("ust2.gif")
+
     # Use the global variables here because we will change them inside this
     # function
     global player, laser, score, score_label, score_display
@@ -303,15 +310,12 @@ def gamestart(x, y):
 
     ### Laser turtle ###
 
-    # Create the laser turtle using the square turtle shape
-    laser = turtle.Turtle()
-    laser.shape("square")
-    laser.color("Red")
+    turtle.addshape("pen.gif")
 
-    # Change the size of the turtle and change the orientation of the turtle
-    laser.shapesize(laser_width / 20, laser_height / 20)
-    laser.left(90)
+    # Create the laser turtle
+    laser = turtle.Turtle()
     laser.up()
+    laser.shape("pen.gif")
 
     # Hide the laser turtle
     laser.hideturtle()
@@ -352,25 +356,33 @@ turtle.tracer(False)
 # Spinner control initialization
 labels = turtle.Turtle()
 labels.hideturtle()
-labels.pencolor("Red")
+labels.pencolor("Yellow")
 labels.up()
 # Write the text
 labels.goto(-100, -155) # Next to the spinner control
 labels.write("Number of Enemies:", font=("System", 12, "bold"))
 labels.goto(-100, -130)
 labels.write("Game Difficulty:", font=("System", 12, "bold"))
+labels.pencolor("Red")
 labels.goto(0, 180)
 labels.write("SAVE", font=("System", 60, "bold"), align="center")
 labels.goto(0, 100)
 labels.write("HKUST", font=("System", 60, "bold"), align="center")
-labels.goto(0, -40)
+labels.pencolor("Yellow")
+labels.goto(0, 35)
 labels.write("Save HKUST from evil homeworks", font=("System", 16, "bold"), align="center")
-labels.goto(0, -65)
+labels.goto(0, 10)
 labels.write("with your mighty pen and redbird!", font=("System", 16, "bold"), align="center")
+labels.goto(0, -25)
+labels.write("Movement: Arrow Keys", font=("System", 14, "italic"), align="center")
+labels.goto(0, -45)
+labels.write("Shoot Pen: Spacebar", font=("System", 14, "italic"), align="center")
+labels.goto(0, -65)
+labels.write("Stop Enemies: s", font=("System", 14, "italic"), align="center")
 # Value display
 enemy_number_text = turtle.Turtle()
 enemy_number_text.hideturtle()
-enemy_number_text.pencolor("Red")
+enemy_number_text.pencolor("Yellow")
 enemy_number_text.up()
 enemy_number_text.goto(80, -155)
 enemy_number_text.write(str(enemy_number), font=("System", 12, "bold"), align="center")
@@ -378,7 +390,7 @@ enemy_number_text.write(str(enemy_number), font=("System", 12, "bold"), align="c
 left_arrow = turtle.Turtle()
 left_arrow.up()
 left_arrow.shape("arrow")
-left_arrow.color("Red")
+left_arrow.color("Yellow")
 left_arrow.shapesize(0.5, 1)
 left_arrow.left(180)
 left_arrow.goto(60, -147)
@@ -395,7 +407,7 @@ left_arrow.showturtle()
 right_arrow = turtle.Turtle()
 right_arrow.up()
 right_arrow.shape("arrow")
-right_arrow.color("Red")
+right_arrow.color("Yellow")
 right_arrow.shapesize(0.5, 1)
 right_arrow.goto(100, -147)
 def increase_enemy_number(x, y):
@@ -409,7 +421,7 @@ right_arrow.onclick(increase_enemy_number)
 # Difficulty display
 difficulty_text = turtle.Turtle()
 difficulty_text.hideturtle()
-difficulty_text.pencolor("Red")
+difficulty_text.pencolor("Yellow")
 difficulty_text.up()
 difficulty_text.goto(68, -130)
 difficulty_text.write("easy", font=("System", 12, "bold"), align="center")
@@ -417,7 +429,7 @@ difficulty_text.write("easy", font=("System", 12, "bold"), align="center")
 left_arrow_2 = turtle.Turtle()
 left_arrow_2.up()
 left_arrow_2.shape("arrow")
-left_arrow_2.color("Red")
+left_arrow_2.color("Yellow")
 left_arrow_2.shapesize(0.5, 1)
 left_arrow_2.left(180)
 left_arrow_2.goto(35, -122)
@@ -427,19 +439,19 @@ def lower_difficulty(x, y):
     if enemy_speed_increment == 5:
         enemy_speed_increment = 3
         difficulty_text.clear()
-        difficulty_text.goto(70, -30)
+        difficulty_text.goto(70, -130)
         difficulty_text.write("normal", font=("System", 12, "bold"), align="center")
     elif enemy_speed_increment == 3:
         enemy_speed_increment = 1
         difficulty_text.clear()
-        difficulty_text.goto(68, -30)
+        difficulty_text.goto(68, -130)
         difficulty_text.write("easy", font=("System", 12, "bold"), align="center")
 left_arrow_2.onclick(lower_difficulty)
 # Right arrow for difficulty
 right_arrow_2 = turtle.Turtle()
 right_arrow_2.up()
 right_arrow_2.shape("arrow")
-right_arrow_2.color("Red")
+right_arrow_2.color("Yellow")
 right_arrow_2.shapesize(0.5, 1)
 right_arrow_2.goto(100, -122)
 def increase_difficulty(x, y):
@@ -448,12 +460,12 @@ def increase_difficulty(x, y):
     if enemy_speed_increment == 1:
         enemy_speed_increment = 3
         difficulty_text.clear()
-        difficulty_text.goto(70, -30)
+        difficulty_text.goto(70, -130)
         difficulty_text.write("normal", font=("System", 12, "bold"), align="center")
     elif enemy_speed_increment == 3:
         enemy_speed_increment = 5
         difficulty_text.clear()
-        difficulty_text.goto(68, -30)
+        difficulty_text.goto(68, -130)
         difficulty_text.write("hard", font=("System", 12, "bold"), align="center")
 right_arrow_2.onclick(increase_difficulty)
 
@@ -462,7 +474,7 @@ start_button = turtle.Turtle()
 start_button.up()
 start_button.goto(-40, -195)
 # Set up button graphics
-start_button.color("White", "DarkGray")
+start_button.color("White", "Black")
 start_button.begin_fill()
 for _ in range(2):
     start_button.forward(80)
@@ -470,7 +482,7 @@ for _ in range(2):
     start_button.forward(25)
     start_button.left(90)
 start_button.end_fill()
-start_button.color("Black")
+start_button.color("White")
 start_button.goto(0, -190)
 start_button.write("Start", font=("System", 12, "bold"), align = "center")
 # Make the turtle clickable with the same size as the graphics
